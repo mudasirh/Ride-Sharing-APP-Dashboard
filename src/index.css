@@ -1,13 +1,98 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+table,
+.card,
+.card-header {
+  overflow-x: auto;
+}
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Sidebar */
+.logo {
+  font-size: 1.4rem;
+}
+.vertical-sidebar {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.container-vertical-sidebar {
+  box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+    0 15px 40px rgba(166, 173, 201, 0.2);
+
+  background-color: white;
+  padding: 10px;
+  height: 100%;
+}
+
+/* @media (max-width: 576px) {
+  .container-vertical-sidebar {
+    display: none;
+  }
+} */
+
+.vertical-sidebar-tab {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 200px;
+}
+.container-vertical-sidebar a {
+  margin-bottom: 20px;
+  font-weight: 500;
+  color: #292929;
+}
+
+.vertical-sidebar .nav-link,
+.vertical-sidebar .nav-link:hover {
+  box-shadow: none;
+}
+.vertical-sidebar-content {
+  /* margin: 100px; */
+  /* margin-top: 100px; */
+}
+
+.navbar {
+  position: relative;
+  z-index: 1;
+}
+table th {
+  cursor: pointer;
+}
+.body-content {
+  margin-left: 30px;
+  margin-top: 30px;
+
+  max-width: 70vw;
+}
+.body-content table td {
+  margin: 0;
+}
+
+.vertical-sBar {
+  padding: 0;
+}
+
+.dashboard-container {
+  margin: 0;
+  padding: 0;
+
+  height: 100vh;
+}
+
+.sidebar-container {
+  height: 100vh;
+  width: 100vw;
 }
