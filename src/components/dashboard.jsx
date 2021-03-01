@@ -4,10 +4,10 @@ class Dashboard extends Component {
   state = {totalRides: 0};
 
   componentDidMount() {
-    let total = this.state.totalRides;
+    let total = 0;
     const users = [...this.props.users];
 
-    console.log(users);
+    console.log(this.props.users);
 
     if (users.length !== 0) {
       users.forEach((user) => {
