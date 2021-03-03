@@ -4,6 +4,8 @@ import _ from "lodash";
 import TableHeader from "./common/tableHeader";
 import Firebase from "../utils/firebase";
 import Paginate from "../utils/paginate";
+import SearchFilter from "../utils/searchFilter";
+import Search from "./common/search";
 
 class DriverDetails extends Component {
   state = {
@@ -15,19 +17,21 @@ class DriverDetails extends Component {
   };
 
   columns = [
-    {path: "name", label: "name"},
-    {path: "age", label: "age"},
-    {path: "address", label: "address"},
-    {path: "cnic", label: "cnic"},
-    {path: "license_No", label: "License"},
-    {path: "Status", label: "Status"},
-    {key: "action", label: "Action"},
+    {path: "name", label: "name", sort: true},
+    {path: "age", label: "age", sort: true},
+    {path: "address", label: "address", sort: true},
+    {path: "cnic", label: "cnic", sort: true},
+    {path: "license_No", label: "License", sort: true},
+    {path: "Status", label: "Status", sort: false},
+    {key: "action", label: "Action", sort: false},
   ];
 
   driverSearch = [
     {key: "name", label: "By Name"},
-    {key: "email", label: "By Email"},
-    {key: "password", label: "Password"},
+    {key: "age", label: "Age"},
+    {key: "address", label: "Adress"},
+    // {key: "cnic", label: "CNIC"},
+    // {key: "license_No", label: "License"},
   ];
 
   handleSort = (column, order) => {
@@ -46,12 +50,61 @@ class DriverDetails extends Component {
       this.setState({currentPage: --currentPage});
     }
   };
+
+  filteredDrivers = () => {
+    const {users} = this.props;
+    const {pageSize, currentPage, searchUserTable} = this.state;
+
+    const sortedUsers = _.orderBy(
+      users,
+      [this.state.sortColumn.column],
+      this.state.sortColumn.order
+    );
+
+    let usersSearchFilter = [];
+    for (let id in users) {
+      users[id].DriverProfile &&
+        usersSearchFilter.push(users[id].DriverProfile);
+    }
+
+    let searchFiltered = sortedUsers;
+    if (searchUserTable) {
+      searchFiltered = SearchFilter(
+        usersSearchFilter,
+        this.state.searchFilter,
+        searchUserTable
+      );
+    }
+
+    const paginatedUsers = Paginate(searchFiltered, currentPage, pageSize);
+    return {data: paginatedUsers};
+  };
+  handlePageChange = (page) => {
+    this.setState({currentPage: page});
+  };
+  handleDriverSearch = ({currentTarget}) => {
+    const searchUserTable = currentTarget.value;
+    this.setState({searchUserTable, currentPage: 1});
+  };
+  handleSearchFilterChange = (e) => {
+    this.setState({searchFilter: e.target.value});
+  };
+
   render() {
-    const {users, onUpdateDriver} = this.props;
-    const {length} = this.props.users;
+    const {onUpdateDriver, users} = this.props;
+
+    const {pageSize, currentPage} = this.state;
+
+    let usersHavingDriverProfile = [];
+    for (let id in users) {
+      users[id].DriverProfile &&
+        usersHavingDriverProfile.push(users[id].DriverProfile);
+    }
+    const {length} = usersHavingDriverProfile;
 
     if (length === 0) return <p>Loading</p>;
     else {
+      const {data} = this.filteredDrivers();
       return (
         <div className='body-content'>
           <div className='card' style={{}}>
@@ -64,6 +117,13 @@ class DriverDetails extends Component {
               </div>
             </div>
             <div className='table-responsive'>
+              <Search
+                handleSearch={this.handleDriverSearch}
+                value={this.state.searchUserTable}
+                userSearch={this.driverSearch}
+                searchFilter={this.state.searchFilter}
+                onSearchFilterChange={this.handleSearchFilterChange}
+              />
               <table className='table align-items-center'>
                 <TableHeader
                   columns={this.columns}
@@ -72,7 +132,7 @@ class DriverDetails extends Component {
                 />
 
                 <tbody>
-                  {users
+                  {data
                     .filter((user) => "DriverProfile" in user)
                     .map((user) => {
                       return (
@@ -136,7 +196,12 @@ class DriverDetails extends Component {
               </table>
             </div>
           </div>
-          <Pagination />
+          <Pagination
+            pageSize={pageSize}
+            length={length}
+            onPageChange={this.handlePageChange}
+            currentPage={currentPage}
+          />
         </div>
       );
     }

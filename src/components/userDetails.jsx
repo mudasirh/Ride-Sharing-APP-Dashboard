@@ -19,17 +19,18 @@ class UserDetails extends Component {
   };
 
   columns = [
-    {path: "name", label: "name"},
-    {path: "email", label: "email"},
-    {path: "phone_No", label: "phone"},
-    {path: "password", label: "password"},
-    {key: "profile", label: "View Profile"},
-    {key: "action", label: "Action"},
+    {path: "name", label: "name", sort: true},
+    {path: "email", label: "email", sort: true},
+    {path: "phone_No", label: "phone", sort: true},
+    {path: "password", label: "password", sort: true},
+    {key: "profile", label: "View Profile", sort: false},
+    {key: "action", label: "Action", sort: false},
   ];
 
   userSearch = [
     {key: "name", label: "By Name"},
     {key: "email", label: "By Email"},
+    {key: "phone_No", label: "Phone"},
   ];
 
   handlePageChange = (page) => {

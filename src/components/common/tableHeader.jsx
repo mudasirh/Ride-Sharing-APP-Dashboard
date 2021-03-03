@@ -27,8 +27,11 @@ class TableHeader extends Component {
           {columns.map((column) => {
             return (
               <th
+                className={column.sort ? "cursor-pointer" : ""}
                 key={this.createKey(column)}
-                onClick={() => this.raiserSort(column.path)}
+                onClick={() => {
+                  if (column.sort) this.raiserSort(column.path);
+                }}
               >
                 {column.label} {this.renderSortIcon(column)}
               </th>

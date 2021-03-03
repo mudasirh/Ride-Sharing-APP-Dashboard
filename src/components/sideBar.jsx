@@ -28,7 +28,7 @@ const SideBar = (props) => {
           id='v-pills-tab'
         >
           <a
-            className='nav-link'
+            className='nav-link active'
             id='v-pills-profile-tab'
             data-bs-toggle='pill'
             href='#v-pills-dashboard'
@@ -36,7 +36,7 @@ const SideBar = (props) => {
             <div className='vertical-sidebar-tab'>Dashboard</div>
           </a>
           <a
-            className='nav-link active'
+            className='nav-link'
             id='v-pills-profile-tab'
             data-bs-toggle='pill'
             href='#v-pills-user-details'
@@ -101,7 +101,7 @@ const SideBar = (props) => {
         >
           {/* User Details */}
           <div
-            className='tab-pane fade show active vertical-sidebar-item'
+            className='tab-pane fade  vertical-sidebar-item'
             id='v-pills-user-details'
           >
             <UserDetails
@@ -133,7 +133,7 @@ const SideBar = (props) => {
             />
           </div>
           <div
-            className='tab-pane fade vertical-sidebar-item '
+            className='tab-pane fade show active vertical-sidebar-item '
             id='v-pills-dashboard'
           >
             <Dashboard users={users} />

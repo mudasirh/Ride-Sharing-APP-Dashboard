@@ -68,7 +68,8 @@ code {
   position: relative;
   z-index: 1;
 }
-table th {
+
+.cursor-pointer {
   cursor: pointer;
 }
 .body-content {
